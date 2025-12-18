@@ -1,0 +1,63 @@
+<div class="m-3">
+<div class="container-fluid p-3 rounded-3 bg-secondary-subtle">
+  <h1>Staff Search</h1>
+  <hr class="my-4">
+  <p>Enter staff name below to search for desired teachers in the school.<br>
+    It will search the Azure SQL staff table in the database.
+  </p>
+</div>
+</div>
+
+<form [formGroup]="staffFormData" (ngSubmit)="onSubmit(staffFormData.value)">
+        <div class="m-3 form-group">
+            <label for="staffName">Staff Name:</label>
+            <input class="w-25 form-control" type="string" id="staffName" name="staffName" formControlName="staffName" required/>
+            @if((staffName?.dirty || staffName?.touched) &&  staffName?.errors?.['minlength'])
+            {
+              <div>
+              <p class="text-danger">Must have 3 or more characters to search staff!</p>
+              </div>
+            }
+            @if(($any(staffName?.dirty) || $any(staffName?.touched)) &&  staffName?.errors?.['required'])
+            {
+              <div>
+              <p class="text-danger">Field can not be empty!</p>
+              </div>
+            }
+            @if(($any(staffName?.dirty) || $any(staffName?.touched)) &&  staffName?.errors?.['pattern'])
+            {
+              <div>
+              <p class="text-danger">Can only use characters, spaces, and commas!</p>
+              </div>
+            }
+        <button type="submit" [disabled]="!staffFormData.valid">Submit</button>
+        <button type="button" class="m-1"(click)="processClick()">Get All Staff</button>
+        </div>
+
+<!--<</form>-->
+<div class="m-3">
+  <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Name</th>
+      <th scope="col">Title</th>
+      <th scope="col">Status</th>
+      <th scope="col">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (staff of staffs; track staff){
+  <tr>
+        <td>{{staff.id}}</td>
+        <td>{{staff.name}}</td>
+        <td>{{staff.title}}</td>
+        <td>{{staff.status}}</td>
+        <td>{{staff.notes}}</td>
+    </tr>
+    }
+  </tbody>
+  </table>
+</div>
+
+
