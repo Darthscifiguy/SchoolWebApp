@@ -9,9 +9,9 @@ import { ICourseAndStaffData } from './course-and-staff-data';
 
 @Injectable({providedIn: 'root'})
 
-export class Wxservice {
+export class serviceSchool {
 
-   private baseUrl: string;
+  private baseUrl: string;
   private staffData$: Observable<IStaffData> = new Observable();
   private courseData$: Observable<ICourseData> = new Observable();
   private courseAndStaffData$: Observable<ICourseAndStaffData> = new Observable();
