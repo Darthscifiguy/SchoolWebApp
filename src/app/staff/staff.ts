@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { environment } from '../../environments/environment';
-import { IStaffData } from '../wxservice/staff-data';
-import { Wxservice } from '../wxservice/wxservice';
+import { IStaffData } from '../serviceSchool/staff-data';
+import { serviceSchool } from '../serviceSchool/serviceSchool';
 
 @Component({
   selector: 'app-staff',
@@ -23,7 +23,7 @@ export class Staff {
   public staffs: any = [];
   env = environment;
 
-  constructor(private service: Wxservice) {      // dependency injection of service object
+  constructor(private service: serviceSchool) {      // dependency injection of service object
     this.isButton = false;
     this.isButtonAll = false;
      this.staffFormData = new FormGroup({

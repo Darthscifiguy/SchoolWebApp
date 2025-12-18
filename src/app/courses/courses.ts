@@ -2,9 +2,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { environment } from '../../environments/environment';
-import { ICourseAndStaffData } from '../wxservice/course-and-staff-data';
-import { Wxservice } from '../wxservice/wxservice';
-import { ICourseData } from '../wxservice/course-data';
+import { ICourseAndStaffData } from '../serviceSchool/course-and-staff-data';
+import { serviceSchool } from '../serviceSchool/serviceSchool';
+import { ICourseData } from '../serviceSchool/course-data';
 
 @Component({
   selector: 'app-courses',
@@ -21,7 +21,7 @@ export class Courses implements OnInit, OnDestroy {
   public urlPasser: string;
   env = environment;
 
-  constructor(private service: Wxservice) {
+  constructor(private service: serviceSchool) {
     this.courseFormData = new FormGroup({
       courseId: new FormControl<number>(0, [Validators.min(0), Validators.max(9999), Validators.pattern('[0-9]*')]),
       teacherName: new FormControl<string>('', [Validators.minLength(3), Validators.pattern('[a-zA-Z, ]*')]),
