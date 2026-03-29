@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { IStaffData } from './staff-data';
 import { ICourseData } from './course-data';
 import { ICourseAndStaffData } from './course-and-staff-data';
+import { IStaffInsert } from './istaff-insert';
 
 
 @Injectable({providedIn: 'root'})
@@ -38,6 +39,45 @@ export class serviceSchool {
     const fullUrl = this.baseUrl + courseandstaff;
     this.courseAndStaffData$= this.httpClient.get<ICourseAndStaffData>(fullUrl);
     return this.courseAndStaffData$;
+  }
+
+  public postStaffWX(staffer: IStaffInsert ): Observable<string>{
+    const fullUrl = this.baseUrl + "staff";
+    const body = JSON.stringify(staffer);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json; charset=utf-8'
+    });
+    return this.httpClient.post<any>(fullUrl, body,  {
+          headers,
+         'observe': 'body',
+         'responseType': 'json'
+      });
+  }
+
+  public updateStaffWX(staffer: IStaffData): Observable<string>{
+    const fullUrl = this.baseUrl + "staff";
+    const body = JSON.stringify(staffer);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json; charset=utf-8'
+    });
+    return this.httpClient.put<any>(fullUrl, body,  {
+          headers,
+         'observe': 'body',
+         'responseType': 'json'
+      });
+  }
+
+  public deleteStaffWX(staffer: IStaffData): Observable<string>{
+    const fullUrl = this.baseUrl + "Staff/delete";
+    const body = JSON.stringify(staffer);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json; charset=utf-8'
+    });
+    return this.httpClient.put<any>(fullUrl, body,  {
+          headers,
+         'observe': 'body',
+         'responseType': 'json'
+      });
   }
 
 }

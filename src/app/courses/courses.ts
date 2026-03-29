@@ -19,6 +19,7 @@ export class Courses implements OnInit, OnDestroy {
   private chosenTeacherName: string;
   private chosenStudentCount: number;
   public urlPasser: string;
+  public isLoading = false;
   env = environment;
 
   constructor(private service: serviceSchool) {
@@ -44,6 +45,7 @@ export class Courses implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {}
 
+  //-----Course Form Submit and Operations-----
   public onSubmit(courseFormData: { courseId: string | number | null; teacherName: string | null; studentCount: string | number | null; })
   {
     //Checks if there was any user input.
@@ -82,7 +84,7 @@ export class Courses implements OnInit, OnDestroy {
         {
           this.chosenStudentCount = courseFormData.studentCount;
         }
-
+        this.isLoading = true;
         this.getCourseAndStaff(this.chosenCourseId, this.chosenTeacherName, this.chosenStudentCount)
       }
       else
@@ -106,6 +108,7 @@ export class Courses implements OnInit, OnDestroy {
 
   public getCourse()
   {
+
     this.service.getCoursesWX('Courses').subscribe(data => { this.processData(data); },
                                      err => { this.processError(err); });
   }
@@ -117,25 +120,25 @@ export class Courses implements OnInit, OnDestroy {
                                      err => { this.processError(err); });
   }
 
-  //needed top access form data for validation
+  //-----Data Validators-----
   public get courseId()
   {
     return this.courseFormData.get('courseId');
   }
 
-  //needed top access form data for validation
   public get teacherName()
   {
     return this.courseFormData.get('teacherName');
   }
 
-  //needed top access form data for validation
   public get studentCount()
   {
     return this.courseFormData.get('studentCount');
   }
 
+  //-----Data Processing-----
   private processData(data: any) {
+      this.isLoading = false;
       if ( data == null)
       {
         data = 'Course not found!';
@@ -151,7 +154,16 @@ export class Courses implements OnInit, OnDestroy {
     }
 
     private processError(err: any) {
-      alert('Error at CoursesComponent.getStaff call to service likely timeout!');
-      console.log('Error at CoursesComponent.getStaff call to service likely timeout!');
+      this.isLoading = false;
+      if( err.message.includes("0 Unknown Error") )
+      {
+        alert('Failure to connect to API! Azure web app may not be running please contact website admin.');
+        console.log('Failure to connect to API! Azure web app may not be running please contact website admin.');
+      }
+      else
+      {
+        alert('Failed to load database info! Likely a timeout please try again.');
+        console.log('Failed to load database info! Likely a timeout please try again.');
+      }
     }
 }
