@@ -7,4 +7,4 @@ The repo is the source code for the front end of the School Web App (https://sch
 ------------------------------------------------------------------------------
 Made By Richard Abrams
 
-darthscifiguy@gmail.com
+rdabrams501@gmail.com / darthscifiguy@gmail.com
